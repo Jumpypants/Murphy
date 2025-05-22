@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.fremontrobotics.murphy.Murphy-mergeReleaseResources-29:/values-w320dp-land-v13/values-w320dp-land-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/danielbentsvi/.gradle/caches/8.13/transforms/f34d2bce03a72eb7f4a9c16c7be00469/transformed/material-1.12.0/res/values-w320dp-land-v13/values-w320dp-land-v13.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,110",
+                        "endColumns": "54,61",
+                        "endOffsets": "105,167"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "com.fremontrobotics.murphy.Murphy-release-31:/values-w320dp-land-v13/values-w320dp-land-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/danielbentsvi/.gradle/caches/8.13/transforms/f34d2bce03a72eb7f4a9c16c7be00469/transformed/material-1.12.0/res/values-w320dp-land-v13/values-w320dp-land-v13.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,110",
+                        "endColumns": "54,61",
+                        "endOffsets": "105,167"
+                    }
+                }
+            ]
+        }
+    ]
+}

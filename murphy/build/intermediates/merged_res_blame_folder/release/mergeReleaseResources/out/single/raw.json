@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/raw/cube_mesh_vertex_shader.glsl",
+        "source": "com.fremontrobotics.murphy.Murphy-RobotCore-10.2.0-21:/raw/cube_mesh_vertex_shader.glsl"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/raw/simple_vertex_shader.glsl",
+        "source": "com.fremontrobotics.murphy.Murphy-RobotCore-10.2.0-21:/raw/simple_vertex_shader.glsl"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/raw/texture_fragment_shader.glsl",
+        "source": "com.fremontrobotics.murphy.Murphy-RobotCore-10.2.0-21:/raw/texture_fragment_shader.glsl"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/raw/color_fragment_shader.glsl",
+        "source": "com.fremontrobotics.murphy.Murphy-RobotCore-10.2.0-21:/raw/color_fragment_shader.glsl"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/raw/cube_mesh_fragment_shader.glsl",
+        "source": "com.fremontrobotics.murphy.Murphy-RobotCore-10.2.0-21:/raw/cube_mesh_fragment_shader.glsl"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/raw/texture_vertex_shader.glsl",
+        "source": "com.fremontrobotics.murphy.Murphy-RobotCore-10.2.0-21:/raw/texture_vertex_shader.glsl"
+    }
+]

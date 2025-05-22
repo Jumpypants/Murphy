@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/color-v23/abc_tint_default.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/color-v23/abc_tint_default.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/color-v23/abc_tint_btn_checkable.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/color-v23/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/color-v23/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/color-v23/abc_tint_seek_thumb.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/color-v23/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/color-v23/abc_tint_edittext.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/color-v23/abc_btn_colored_text_material.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/color-v23/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/color-v23/abc_color_highlight_material.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/color-v23/abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/color-v23/abc_tint_spinner.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/color-v23/abc_tint_switch_track.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/color-v23/abc_tint_switch_track.xml"
+    }
+]

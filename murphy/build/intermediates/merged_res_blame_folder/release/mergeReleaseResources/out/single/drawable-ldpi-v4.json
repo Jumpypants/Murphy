@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/drawable-ldpi-v4/ic_call_answer_video_low.png",
+        "source": "com.fremontrobotics.murphy.Murphy-core-1.13.0-9:/drawable-ldpi-v4/ic_call_answer_video_low.png"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/drawable-ldpi-v4/ic_call_decline_low.png",
+        "source": "com.fremontrobotics.murphy.Murphy-core-1.13.0-9:/drawable-ldpi-v4/ic_call_decline_low.png"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/drawable-ldpi-v4/ic_call_answer_low.png",
+        "source": "com.fremontrobotics.murphy.Murphy-core-1.13.0-9:/drawable-ldpi-v4/ic_call_answer_low.png"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/drawable-ldpi-v4/ic_call_decline.png",
+        "source": "com.fremontrobotics.murphy.Murphy-core-1.13.0-9:/drawable-ldpi-v4/ic_call_decline.png"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/drawable-ldpi-v4/ic_call_answer_video.png",
+        "source": "com.fremontrobotics.murphy.Murphy-core-1.13.0-9:/drawable-ldpi-v4/ic_call_answer_video.png"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/drawable-ldpi-v4/ic_call_answer.png",
+        "source": "com.fremontrobotics.murphy.Murphy-core-1.13.0-9:/drawable-ldpi-v4/ic_call_answer.png"
+    }
+]

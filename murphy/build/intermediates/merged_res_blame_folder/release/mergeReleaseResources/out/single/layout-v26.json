@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/layout-v26/abc_screen_toolbar.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/layout-v26/abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/layout-v26/mtrl_calendar_month.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-material-1.12.0-25:/layout-v26/mtrl_calendar_month.xml"
+    }
+]

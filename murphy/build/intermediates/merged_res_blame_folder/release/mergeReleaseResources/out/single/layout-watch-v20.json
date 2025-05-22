@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/layout-watch-v20/abc_alert_dialog_title_material.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/layout-watch-v20/abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-appcompat-1.7.0-13:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml"
+    }
+]

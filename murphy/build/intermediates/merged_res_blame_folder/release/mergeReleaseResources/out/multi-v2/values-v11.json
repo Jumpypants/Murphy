@@ -1,0 +1,36 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.fremontrobotics.murphy.Murphy-mergeReleaseResources-29:/values-v11/values-v11.xml",
+            "map": [
+                {
+                    "source": "/Users/danielbentsvi/.gradle/caches/8.13/transforms/d0c24455a8be7b76b576ef7be71dbd79/transformed/RobotCore-10.2.0/res/values-v11/values-v11.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "138"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "com.fremontrobotics.murphy.Murphy-release-31:/values-v11/values-v11.xml",
+            "map": [
+                {
+                    "source": "/Users/danielbentsvi/.gradle/caches/8.13/transforms/d0c24455a8be7b76b576ef7be71dbd79/transformed/RobotCore-10.2.0/res/values-v11/values-v11.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "138"
+                    }
+                }
+            ]
+        }
+    ]
+}

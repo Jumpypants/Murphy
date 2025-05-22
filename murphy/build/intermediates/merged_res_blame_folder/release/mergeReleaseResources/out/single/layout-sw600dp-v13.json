@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/layout-sw600dp-v13/mtrl_layout_snackbar.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-material-1.12.0-25:/layout-sw600dp-v13/mtrl_layout_snackbar.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/layout-sw600dp-v13/design_layout_snackbar.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-material-1.12.0-25:/layout-sw600dp-v13/design_layout_snackbar.xml"
+    }
+]

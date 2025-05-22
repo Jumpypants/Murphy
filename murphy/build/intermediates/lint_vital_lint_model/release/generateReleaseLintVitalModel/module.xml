@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="/Users/danielbentsvi/AndroidStudioProjects/InfernoBots2025rr/Murphy"
+    name=":Murphy"
+    type="LIBRARY"
+    maven="InfernoBots2025rr:Murphy:unspecified"
+    agpVersion="8.8.1"
+    buildFolder="build"
+    bootClassPath="/Users/danielbentsvi/Library/Android/sdk/platforms/android-34/android.jar:/Users/danielbentsvi/Library/Android/sdk/build-tools/35.0.0/core-lambda-stubs.jar"
+    javaSourceLevel="11"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>

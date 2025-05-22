@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/xml/file_provider_paths.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-RobotCore-10.2.0-21:/xml/file_provider_paths.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/xml/teamwebcamcalibrations.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-RobotCore-10.2.0-21:/xml/teamwebcamcalibrations.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/xml/builtinwebcamcalibrations.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-RobotCore-10.2.0-21:/xml/builtinwebcamcalibrations.xml"
+    }
+]

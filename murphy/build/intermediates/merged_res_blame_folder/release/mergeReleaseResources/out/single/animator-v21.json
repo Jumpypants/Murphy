@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/animator-v21/m3_appbar_state_list_animator.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-material-1.12.0-25:/animator-v21/m3_appbar_state_list_animator.xml"
+    },
+    {
+        "merged": "com.fremontrobotics.murphy.Murphy-release-31:/animator-v21/design_appbar_state_list_animator.xml",
+        "source": "com.fremontrobotics.murphy.Murphy-material-1.12.0-25:/animator-v21/design_appbar_state_list_animator.xml"
+    }
+]
