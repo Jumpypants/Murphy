@@ -1,0 +1,4 @@
+# This file tells JitPack which module to publish
+
+install:
+  - FILE=-Dcom.github.Jumpypants:murphy:1.0
