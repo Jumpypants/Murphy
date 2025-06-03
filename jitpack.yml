@@ -1,4 +1,5 @@
 # This file tells JitPack which module to publish
 
-install:
-  - FILE=-Dcom.github.Jumpypants:murphy:1.0
+jdk: openjdk17 # Good to keep this for explicit Java version
+artifacts:
+  - murphy/build/outputs/aar/murphy-release.aar
