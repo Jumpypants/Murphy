@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'maven-publish'
+    id 'io.deepmedia.tools.deployer' version '0.18.0'
 }
+
 
 android {
     namespace 'com.jumpypants.murphy'
