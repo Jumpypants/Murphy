@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.library'
     id 'maven-publish'
-    // You don't need the deployer plugin for GitHub Packages, so I removed it.
-    // If you still want it for other reasons, add it back.
 }
+
+group = 'com.github.Jumpypants'   // <-- IMPORTANT: group must be com.github.<UserOrOrg>
+version = '1.0.0'                 // JitPack will override this with your Git tag usually
 
 android {
     namespace 'com.jumpypants.murphy'
@@ -13,8 +14,7 @@ android {
         minSdk 24
         targetSdk 35
         versionCode 1
-        versionName "1.0"
-
+        versionName "1.0.0" // keep in sync if you like, but JitPack uses the Git tag
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,7 +30,6 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
-    // This makes Gradle create sources/javadoc jars for the release variant
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -51,29 +50,17 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
 }
 
-publishing {
-    publications {
-        // We'll attach the Android 'release' component after evaluation (see afterEvaluate below)
-        create('gpr', MavenPublication) {
-            groupId = 'com.jumpypants'
-            artifactId = 'murphy'
-            version = '1.0.0'
-        }
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Jumpypants/Murphy") // <-- change these
-            credentials {
-                // Works in GitHub Actions. Locally you can set -Pgpr.user / -Pgpr.key if you want.
-                username = System.getenv("GITHUB_ACTOR") ?: (project.findProperty("gpr.user") ?: "")
-                password = System.getenv("GITHUB_TOKEN") ?: (project.findProperty("gpr.key") ?: "")
+// Configure the publication AFTER the Android plugin wires up the release component
+afterEvaluate {
+    publishing {
+        publications {
+            create("release", MavenPublication) {
+                from components.release
+
+                groupId = project.group
+                artifactId = "Murphy"     // <-- Repo name by convention; consumers will use com.github.Jumpypants:Murphy:<tag>
+                version = project.version
             }
         }
     }
-}
-
-// Needed for Android projects so the 'release' component exists before we attach it
-afterEvaluate {
-    publishing.publications.gpr.from(components.release)
 }
