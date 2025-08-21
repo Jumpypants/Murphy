@@ -3,7 +3,7 @@ package com.jumpypants.murphy;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * An action that runs multiple actions in parallel.
+ * A task that runs multiple tasks in parallel.
  */
 public class ParallelTask extends Task {
     private final Task[] actions;
@@ -12,12 +12,23 @@ public class ParallelTask extends Task {
 
     /**
      * @param stopOnFirstCompletion
-     * Defines weather or not to stop when one of the actions is completed.
-     * The alternative is waiting until all actions are completed to stop.
+     * Defines whether or not to stop when one of the tasks is completed.
+     * The alternative is waiting until all tasks are completed to stop.
      * @param actions
-     * The actions to run.
+     * The tasks to run.
      */
     public ParallelTask(boolean stopOnFirstCompletion, Task... actions) {
+        if (actions == null) {
+            throw new IllegalArgumentException("Actions array cannot be null");
+        }
+        if (actions.length == 0) {
+            throw new IllegalArgumentException("Actions array cannot be empty");
+        }
+        for (int i = 0; i < actions.length; i++) {
+            if (actions[i] == null) {
+                throw new IllegalArgumentException("Action at index " + i + " cannot be null");
+            }
+        }
         this.actions = actions;
         this.stopOnFirstCompletion = stopOnFirstCompletion;
     }

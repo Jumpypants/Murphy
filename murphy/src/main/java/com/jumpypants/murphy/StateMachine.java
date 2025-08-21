@@ -15,6 +15,9 @@ public class StateMachine {
      * The next state will be the one returned by the initial state, and so on.
      */
     public StateMachine(State initialState) {
+        if (initialState == null) {
+            throw new IllegalArgumentException("Initial state cannot be null");
+        }
         currentState = initialState;
     }
 
@@ -26,7 +29,14 @@ public class StateMachine {
      * A 'Telemetry' instance to be used for debugging.
      */
     public void step(Telemetry telemetry) {
+        if (currentState == null) {
+            throw new IllegalStateException("Current state is null. StateMachine cannot operate without a valid state.");
+        }
         telemetry.addData("State", currentState.getName());
-        currentState = currentState.step();
+        State nextState = currentState.step(telemetry);
+        if (nextState == null) {
+            throw new IllegalStateException("State '" + currentState.getName() + "' returned null as the next state. States must return a valid State instance.");
+        }
+        currentState = nextState;
     }
 }
