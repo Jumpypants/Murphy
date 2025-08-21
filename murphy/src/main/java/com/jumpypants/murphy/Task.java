@@ -5,26 +5,22 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * This class can be used to separate different parts of the robot's state.
- * A task can represent a mechanical movement like moving a slide to a certain position.
- * It can also represent a software process like waiting until a sensor reads a certain value.
- * It is recommended to extend 'Task' within a class that represents a subsystem of the robot.
- * Multiple tasks can be stringed together to perform complicated operations.
+ * Abstract base class for encapsulating robot operations and state transitions.
+ * Tasks can represent mechanical movements, sensor operations, or other processes.
+ * Extend this class within subsystem implementations to create reusable components.
+ * Tasks can be composed together to perform complex operations.
  */
 public abstract class Task {
     /**
-     * How long it has been since the action was initialized.
+     * Elapsed time since task initialization.
      */
     protected final ElapsedTime ELAPSED_TIME = new ElapsedTime();
     protected boolean initialized = false;
 
     /**
-     * Call this to run the task. It will call the 'run' method.
-     * The 'initialize' method will be called if this is the first time calling 'step'.
-     * @param telemetry
-     * A 'Telemetry' instance to be used for debugging.
-     * @return
-     * Returns whether the task wants to be run another time (will return false if the task is finished).
+     * Executes the task. Calls initialize() on first invocation, then run() on each subsequent call.
+     * @param telemetry Telemetry instance for debugging output
+     * @return true if the task should continue running, false if completed
      */
     public final boolean step(Telemetry telemetry) {
         if (telemetry == null) {
@@ -39,20 +35,15 @@ public abstract class Task {
     }
 
     /**
-     * This method will be called upon the first call of 'step' (when the task is first run).
-     * @param telemetry
-     * A 'Telemetry' instance to be used for debugging.
+     * Initializes the task. Called once before the first run() invocation.
+     * @param telemetry Telemetry instance for debugging output
      */
     protected abstract void initialize(Telemetry telemetry);
 
     /**
-     * This will be run every time 'step' is called.
-     * This serves as the "tick" function of the task.
-     * @param telemetry
-     * A 'Telemetry' instance to be used for debugging.
-     * @return
-     * Should return whether or not to run the task again.
-     * It should return 'false' when the task is done.
+     * Executes the main task logic. Called on each step() invocation after initialization.
+     * @param telemetry Telemetry instance for debugging output
+     * @return true to continue execution, false when task is complete
      */
     protected abstract boolean run(Telemetry telemetry);
 }

@@ -3,33 +3,27 @@ package com.jumpypants.murphy;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * This is used to represent a state that the robot can be in.
- * For example a robot can be in an 'idle' state or in an 'intaking' state.
- * The robot should have a few of these states, and always be on one of these states.
- * This should be done using a 'StateMachine'.
- * The state can use 'Task's to compartmentalize tasks.
+ * Represents a discrete robot state with associated behavior and transitions.
+ * States define robot behavior modes such as idle, intake, or scoring operations.
+ * The robot maintains exactly one active state at any time, managed by a StateMachine.
+ * States can utilize Tasks to modularize complex operations.
  * <br> <br>
- * The difference between states and tasks is that tasks are always run in a given order,
- * linearly or in parallel, but states are more general, and the robot can flip between
- * states in an order that responds to sensor and driver input.
+ * States differ from Tasks in that Tasks execute in predetermined sequences,
+ * while States allow dynamic transitions based on sensor input and driver commands.
  */
 public interface State {
     /**
-     * This is called every frame by the 'StateMachine' to run the state.
-     * This is where all the logic for the state should be.
-     * @param telemetry
-     * A 'Telemetry' instance to be used for debugging.
-     * @return
-     * Returns the next state to be run. Unless this state only requires one frame to run,
-     * it should return itself several times before returning an instance of another state.
+     * Executes the state logic and determines the next state transition.
+     * Called by the StateMachine on each iteration.
+     * @param telemetry Telemetry instance for debugging output
+     * @return The next state to execute (typically returns itself until transition conditions are met)
      */
     State step(Telemetry telemetry);
 
     /**
-     * @return
-     * A string that is the name of the state.
-     * This is used by the 'StateMachine' to print the current state name.
-     * This should probably just return a hardcoded string.
+     * Returns the display name of this state.
+     * Used by the StateMachine for telemetry output.
+     * @return Human-readable state name
      */
     String getName();
 }

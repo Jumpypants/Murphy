@@ -3,7 +3,7 @@ package com.jumpypants.murphy;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * A task that runs multiple tasks in parallel.
+ * Executes multiple tasks concurrently.
  */
 public class ParallelTask extends Task {
     private final Task[] actions;
@@ -11,11 +11,10 @@ public class ParallelTask extends Task {
     private final boolean stopOnFirstCompletion;
 
     /**
-     * @param stopOnFirstCompletion
-     * Defines whether or not to stop when one of the tasks is completed.
-     * The alternative is waiting until all tasks are completed to stop.
-     * @param actions
-     * The tasks to run.
+     * Creates a parallel task that executes multiple tasks simultaneously.
+     * @param stopOnFirstCompletion Whether to stop execution when the first task completes,
+     *                             or wait for all tasks to complete
+     * @param actions Tasks to execute in parallel
      */
     public ParallelTask(boolean stopOnFirstCompletion, Task... actions) {
         if (actions == null) {

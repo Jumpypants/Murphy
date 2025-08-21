@@ -3,16 +3,15 @@ package com.jumpypants.murphy;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * This class is used to manage the states of the robot, and to run them.
- * The opMode should probably have exactly one instance of this class.
+ * Manages robot state execution and transitions.
+ * Maintains the current active state and orchestrates state transitions.
  */
 public class StateMachine {
     private State currentState;
 
     /**
-     * @param initialState
-     * A state instance to be the initial state of the robot.
-     * The next state will be the one returned by the initial state, and so on.
+     * Creates a state machine with the specified initial state.
+     * @param initialState The state to begin execution with
      */
     public StateMachine(State initialState) {
         if (initialState == null) {
@@ -22,11 +21,9 @@ public class StateMachine {
     }
 
     /**
-     * This method should probably be called by the opMode on every iteration.
-     * It will call the 'step' method of the current state, and then
-     * set the current state to the return value.
-     * @param telemetry
-     * A 'Telemetry' instance to be used for debugging.
+     * Executes the current state and handles state transitions.
+     * Should be called once per iteration in the main control loop.
+     * @param telemetry Telemetry instance for debugging output
      */
     public void step(Telemetry telemetry) {
         if (currentState == null) {

@@ -3,7 +3,7 @@ package com.jumpypants.murphy;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * A task that runs multiple tasks in a certain sequence.
+ * Executes multiple tasks in sequential order.
  */
 public class SequentialTask extends Task {
     private final Task[] actions;
@@ -11,8 +11,8 @@ public class SequentialTask extends Task {
     private int currentActionIndex = 0;
 
     /**
-     * @param actions
-     * The actions to run in their respective order.
+     * Creates a sequential task that executes tasks in the specified order.
+     * @param actions Tasks to execute sequentially
      */
     public SequentialTask(Task... actions) {
         if (actions == null) {
