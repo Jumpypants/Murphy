@@ -6,7 +6,7 @@ A lightweight and intuitive state machine library for FIRST Tech Challenge (FTC)
 
 ### Using JitPack (Recommended)
 
-1. Add JitPack to your project's root `build.gradle` file (This file may have a comment saying you prbobably don't need to edit it. Don't worry about that):
+1. Add JitPack to your project's root `build.gradle` file (This file may have a comment saying you probably don't need to edit it. Don't worry about that):
 
 ```gradle
 allprojects {
@@ -21,9 +21,16 @@ allprojects {
 
 ```gradle
 dependencies {
-    implementation 'com.github.Jumpypants:Murphy:1.0.0'
+    implementation 'com.github.Jumpypants:Murphy:Tag'
     // ... other dependencies
 }
+```
+
+Replace `Tag` with the latest release version. You can find the latest version on the [releases page](https://github.com/Jumpypants/Murphy/releases).
+
+**Example with specific version:**
+```gradle
+implementation 'com.github.Jumpypants:Murphy:v1.0.0'
 ```
 
 3. Sync your project and you're ready to go.
@@ -58,7 +65,7 @@ StateMachine → Current State → State.step() → Next State
 Task.step() → initialize() (first call only) → run() → return continue/stop
 ```
 
-##  API Reference
+## API Reference
 
 ### StateMachine
 
