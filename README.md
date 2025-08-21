@@ -6,7 +6,7 @@ A lightweight and intuitive state machine library for FIRST Tech Challenge (FTC)
 
 ### Using JitPack (Recommended)
 
-1. Add JitPack to your project's root `build.gradle` file:
+1. Add JitPack to your project's root `build.gradle` file (This file may have a comment saying you prbobably don't need to edit it. Don't worry about that):
 
 ```gradle
 allprojects {
