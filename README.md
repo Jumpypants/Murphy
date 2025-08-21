@@ -26,14 +26,14 @@ dependencies {
 }
 ```
 
-3. Sync your project and you're ready to go!
+3. Sync your project and you're ready to go.
 
-## 📋 Overview
+## Overview
 
 Murphy is built around two core concepts:
 
-- **States**: High-level robot behaviors (e.g., "Intake", "Score", "Drive")
-- **Tasks**: Lower-level actions that can be composed and executed (e.g., "Move arm to position", "Wait 2 seconds")
+- **States**: High-level robot behaviors or cycle steps (e.g., "Intake", "Score", "Defend")
+- **Tasks**: Lower-level actions that can be composed and executed within the states (e.g., "Move arm to position", "Wait 2 seconds")
 
 The library promotes a clean separation of concerns and makes complex robot behaviors easier to reason about, debug, and maintain.
 
@@ -41,12 +41,10 @@ The library promotes a clean separation of concerns and makes complex robot beha
 
 - Simple state machine implementation
 - Task composition (sequential and parallel execution)
-- Built-in telemetry integration
 - Elapsed time tracking for tasks
-- Clean initialization and execution lifecycle
 - Lightweight with no external dependencies
 
-## 🏗️ Architecture
+## Architecture
 
 ### State Machine Flow
 ```
@@ -177,7 +175,7 @@ Task raceCondition = new ParallelTask(
 - `ParallelTask(boolean stopOnFirstCompletion, Task... actions)`
   - `stopOnFirstCompletion`: If true, stops when any task completes; if false, waits for all tasks
 
-## 💡 Usage Examples
+## Usage Examples
 
 ### Basic State Machine
 
@@ -265,16 +263,16 @@ public class AutonomousState implements State {
 
 1. **Keep states focused**: Each state should represent one high-level behavior
 2. **Use tasks for reusability**: Create tasks for common actions that can be reused
-3. **Leverage composition**: Use SequentialTask and ParallelTask to build complex behaviors
-4. **Add telemetry**: Use the provided telemetry parameter for debugging
+3. **Task ownership**: Task classes should live inside of their respective subsytem classes (A "MoveClaw" class should exist inside of your Claw class)
+4. **Leverage composition**: Use SequentialTask and ParallelTask to build complex behaviors
 5. **Handle timeouts**: Consider using timeouts in your tasks to prevent infinite loops
 6. **Test incrementally**: Build and test simple states/tasks before composing complex behaviors
 
-## 🤝 Contributing
+## Contributing
 
 Feel free to submit issues and pull requests to improve the library!
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License].
 
