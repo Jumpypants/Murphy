@@ -2,6 +2,9 @@
 
 A lightweight and intuitive state machine library for FIRST Tech Challenge (FTC) robotics teams. Murphy provides a clean architecture for managing complex robot behaviors through states and tasks, making your autonomous and teleop code more organized and maintainable.
 
+<details>
+<summary><strong>Installation</strong></summary>
+
 ## Installation
 
 ### Using JitPack (Recommended)
@@ -35,6 +38,11 @@ implementation 'com.github.Jumpypants:Murphy:v1.0.0'
 
 3. Sync your project and you're ready to go.
 
+</details>
+
+<details>
+<summary><strong>Overview</strong></summary>
+
 ## Overview
 
 Murphy is built around two core concepts:
@@ -51,6 +59,11 @@ The library promotes a clean separation of concerns and makes complex robot beha
 - Elapsed time tracking for tasks
 - Lightweight with no external dependencies
 
+</details>
+
+<details>
+<summary><strong>Architecture</strong></summary>
+
 ## Architecture
 
 ### State Machine Flow
@@ -65,9 +78,15 @@ StateMachine → Current State → State.step(RobotContext) → Next State
 Task.step(RobotContext) → initialize() (first call only) → run() → return continue/stop
 ```
 
+</details>
+
+<details open>
+<summary><strong>API Reference (expand to view components)</strong></summary>
+
 ## API Reference
 
-### RobotContext
+<details>
+<summary><strong>RobotContext</strong></summary>
 
 A centralized container for shared resources used throughout the robot control system.
 You can extend this class to include other references of you want to.
@@ -84,7 +103,10 @@ RobotContext robotContext = new RobotContext(telemetry, gamepad1, gamepad2);
 **Constructor:**
 - `RobotContext(Telemetry telemetry, Gamepad gamepad1, Gamepad gamepad2)` - All parameters required and cannot be null
 
-### StateMachine
+</details>
+
+<details>
+<summary><strong>StateMachine</strong></summary>
 
 The main controller that manages state transitions and execution.
 
@@ -99,7 +121,10 @@ stateMachine.step();
 - `StateMachine(State initialState, RobotContext robotContext)` - Constructor with starting state and context
 - `step()` - Execute current state and handle transitions
 
-### State Interface
+</details>
+
+<details>
+<summary><strong>State Interface</strong></summary>
 
 Implement this interface to create custom robot states.
 
@@ -128,7 +153,10 @@ public class IntakingState implements State {
 - `step(RobotContext robotContext)` - Called every loop iteration, returns next state
 - `getName()` - Returns state name for telemetry display
 
-### Task (Abstract Class)
+</details>
+
+<details>
+<summary><strong>Task (Abstract Class)</strong></summary>
 
 Base class for all tasks. Extend this to create reusable actions.
 
@@ -171,7 +199,10 @@ public class MoveArmTask extends Task {
 - `initialize(RobotContext robotContext)` - Override for setup code
 - `run(RobotContext robotContext)` - Override for main execution logic
 
-### SequentialTask
+</details>
+
+<details>
+<summary><strong>SequentialTask</strong></summary>
 
 Executes multiple tasks in order, waiting for each to complete before starting the next.
 
@@ -186,7 +217,10 @@ Task sequence = new SequentialTask(
 **Constructor:**
 - `SequentialTask(Task... actions)` - Variable number of tasks to execute in order
 
-### ParallelTask
+</details>
+
+<details>
+<summary><strong>ParallelTask</strong></summary>
 
 Executes multiple tasks simultaneously.
 
@@ -209,9 +243,17 @@ Task raceCondition = new ParallelTask(
 - `ParallelTask(boolean stopOnFirstCompletion, Task... actions)`
   - `stopOnFirstCompletion`: If true, stops when any task completes; if false, waits for all tasks
 
+</details>
+
+</details>
+
+<details>
+<summary><strong>Usage Examples</strong></summary>
+
 ## Usage Examples
 
-### Basic State Machine
+<details>
+<summary><strong>Basic State Machine</strong></summary>
 
 ```java
 @Autonomous
@@ -231,7 +273,10 @@ public class MyAutonomous extends LinearOpMode {
 }
 ```
 
-### Complex Task Composition
+</details>
+
+<details>
+<summary><strong>Complex Task Composition</strong></summary>
 
 ```java
 public class ScoreSequence extends Task {
@@ -263,7 +308,10 @@ public class ScoreSequence extends Task {
 }
 ```
 
-### State with Task Integration
+</details>
+
+<details>
+<summary><strong>State with Task Integration</strong></summary>
 
 ```java
 public class AutonomousState implements State {
@@ -296,7 +344,10 @@ public class AutonomousState implements State {
 }
 ```
 
-### TeleOp with Gamepad Integration
+</details>
+
+<details>
+<summary><strong>TeleOp with Gamepad Integration</strong></summary>
 
 ```java
 public class TeleOpDriveState implements State {
@@ -332,6 +383,13 @@ public class TeleOpDriveState implements State {
 }
 ```
 
+</details>
+
+</details>
+
+<details>
+<summary><strong>Best Practices</strong></summary>
+
 ## Best Practices
 
 1. **Keep states focused**: Each state should represent one high-level behavior
@@ -342,13 +400,25 @@ public class TeleOpDriveState implements State {
 6. **Handle timeouts**: Consider using timeouts in your tasks to prevent infinite loops
 7. **Test incrementally**: Build and test simple states/tasks before composing complex behaviors
 
+</details>
+
+<details>
+<summary><strong>Contributing</strong></summary>
+
 ## Contributing
 
 Feel free to submit issues and pull requests to improve the library!
 
+</details>
+
+<details>
+<summary><strong>License</strong></summary>
+
 ## License
 
 This project is open source and available under the MIT License.
+
+</details>
 
 ---
 
