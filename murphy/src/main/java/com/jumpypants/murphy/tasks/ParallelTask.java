@@ -1,6 +1,6 @@
-package com.jumpypants.murphy;
+package com.jumpypants.murphy.tasks;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.jumpypants.murphy.RobotContext;
 
 /**
  * Executes multiple tasks concurrently.
@@ -33,14 +33,14 @@ public class ParallelTask extends Task {
     }
 
     @Override
-    protected void initialize(Telemetry telemetry) {}
+    protected void initialize(RobotContext robotContext) {}
 
     @Override
-    protected boolean run(Telemetry telemetry) {
+    protected boolean run(RobotContext robotContext) {
         boolean runAgain = false;
 
         for (Task action : actions) {
-            if (action.step(telemetry)) {
+            if (action.step(robotContext)) {
                 runAgain = true;
                 if (stopOnFirstCompletion) {
                     break;

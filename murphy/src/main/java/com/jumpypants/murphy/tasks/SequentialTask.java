@@ -1,6 +1,6 @@
-package com.jumpypants.murphy;
+package com.jumpypants.murphy.tasks;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.jumpypants.murphy.RobotContext;
 
 /**
  * Executes multiple tasks in sequential order.
@@ -30,17 +30,17 @@ public class SequentialTask extends Task {
     }
 
     @Override
-    protected void initialize(Telemetry telemetry) {}
+    protected void initialize(RobotContext robotContext) {}
 
     @Override
-    protected boolean run(Telemetry telemetry) {
+    protected boolean run(RobotContext robotContext) {
         // If we've completed all actions, return false to indicate completion
         if (currentActionIndex >= actions.length) {
             return false;
         }
 
         // Run the current action
-        if (!actions[currentActionIndex].step(telemetry)) {
+        if (!actions[currentActionIndex].step(robotContext)) {
             // Current action completed, move to next
             currentActionIndex++;
         }

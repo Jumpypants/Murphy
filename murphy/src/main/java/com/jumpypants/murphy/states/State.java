@@ -1,6 +1,6 @@
-package com.jumpypants.murphy;
+package com.jumpypants.murphy.states;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.jumpypants.murphy.RobotContext;
 
 /**
  * Represents a discrete robot state with associated behavior and transitions.
@@ -15,10 +15,10 @@ public interface State {
     /**
      * Executes the state logic and determines the next state transition.
      * Called by the StateMachine on each iteration.
-     * @param telemetry Telemetry instance for debugging output
+     * @param robotContext contains references like telemetry and gamepads.
      * @return The next state to execute (typically returns itself until transition conditions are met)
      */
-    State step(Telemetry telemetry);
+    State step(RobotContext robotContext);
 
     /**
      * Returns the display name of this state.

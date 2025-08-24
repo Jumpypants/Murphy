@@ -55,57 +55,77 @@ The library promotes a clean separation of concerns and makes complex robot beha
 
 ### State Machine Flow
 ```
-StateMachine → Current State → State.step() → Next State
-     ↑                                           ↓
-     └─────────── Update current state ←────────┘
+StateMachine → Current State → State.step(RobotContext) → Next State
+     ↑                                                      ↓
+     └─────────── Update current state ←───────────────────┘
 ```
 
 ### Task Execution Flow
 ```
-Task.step() → initialize() (first call only) → run() → return continue/stop
+Task.step(RobotContext) → initialize() (first call only) → run() → return continue/stop
 ```
 
 ## API Reference
+
+### RobotContext
+
+A centralized container for shared resources used throughout the robot control system.
+You can extend this class to include other references of you want to.
+
+```java
+RobotContext robotContext = new RobotContext(telemetry, gamepad1, gamepad2);
+```
+
+**Fields:**
+- `telemetry` - Telemetry instance for driver station communication
+- `gamepad1` - Primary gamepad controller (typically driver)
+- `gamepad2` - Secondary gamepad controller (typically operator)
+
+**Constructor:**
+- `RobotContext(Telemetry telemetry, Gamepad gamepad1, Gamepad gamepad2)` - All parameters required and cannot be null
 
 ### StateMachine
 
 The main controller that manages state transitions and execution.
 
 ```java
-StateMachine stateMachine = new StateMachine(initialState);
+StateMachine stateMachine = new StateMachine(initialState, robotContext);
 
 // In your OpMode loop
-stateMachine.step(telemetry);
+stateMachine.step();
 ```
 
 **Methods:**
-- `StateMachine(State initialState)` - Constructor with starting state
-- `step(Telemetry telemetry)` - Execute current state and handle transitions
+- `StateMachine(State initialState, RobotContext robotContext)` - Constructor with starting state and context
+- `step()` - Execute current state and handle transitions
 
 ### State Interface
 
 Implement this interface to create custom robot states.
 
 ```java
-public class DriveToPositionState implements State {
+public class IntakingState implements State {
     @Override
-    public State step() {
+    public State step(RobotContext robotContext) {
+        // Access telemetry and gamepads through robotContext
+        robotContext.telemetry.addData("State", "Intaking game element");
+        
         // Your state logic here
-        if (taskComplete) {
-            return new NextState();
+        if (gameElementDetected) {
+            return new HoldingElementState();
         }
         return this; // Continue in this state
     }
     
     @Override
     public String getName() {
-        return "Drive To Position";
+        return "Intaking";
     }
 }
 ```
 
 **Methods:**
-- `step()` - Called every loop iteration, returns next state
+- `step(RobotContext robotContext)` - Called every loop iteration, returns next state
 - `getName()` - Returns state name for telemetry display
 
 ### Task (Abstract Class)
@@ -121,15 +141,22 @@ public class MoveArmTask extends Task {
     }
     
     @Override
-    protected void initialize(Telemetry telemetry) {
+    protected void initialize(RobotContext robotContext) {
         // Setup code (runs once)
         robot.arm.setTargetPosition(targetPosition);
+        robotContext.telemetry.addData("Arm Target", targetPosition);
     }
     
     @Override
-    protected boolean run(Telemetry telemetry) {
+    protected boolean run(RobotContext robotContext) {
         // Execution code (runs every loop)
-        telemetry.addData("Arm Position", robot.arm.getCurrentPosition());
+        robotContext.telemetry.addData("Arm Position", robot.arm.getCurrentPosition());
+        
+        // Access gamepad inputs if needed
+        if (robotContext.gamepad1.a) {
+            // Manual stop logic
+        }
+        
         return !robot.arm.isAtTarget(); // Return false when done
     }
 }
@@ -140,9 +167,9 @@ public class MoveArmTask extends Task {
 - `initialized` - Boolean flag for initialization state
 
 **Methods:**
-- `step(Telemetry telemetry)` - Main execution method (call this)
-- `initialize(Telemetry telemetry)` - Override for setup code
-- `run(Telemetry telemetry)` - Override for main execution logic
+- `step(RobotContext robotContext)` - Main execution method (call this)
+- `initialize(RobotContext robotContext)` - Override for setup code
+- `run(RobotContext robotContext)` - Override for main execution logic
 
 ### SequentialTask
 
@@ -191,12 +218,13 @@ Task raceCondition = new ParallelTask(
 public class MyAutonomous extends LinearOpMode {
     @Override
     public void runOpMode() {
-        StateMachine stateMachine = new StateMachine(new StartState());
+        RobotContext robotContext = new RobotContext(telemetry, gamepad1, gamepad2);
+        StateMachine stateMachine = new StateMachine(new StartState(), robotContext);
         
         waitForStart();
         
         while (opModeIsActive()) {
-            stateMachine.step(telemetry);
+            stateMachine.step();
             telemetry.update();
         }
     }
@@ -226,11 +254,11 @@ public class ScoreSequence extends Task {
     }
     
     @Override
-    protected void initialize(Telemetry telemetry) {}
+    protected void initialize(RobotContext robotContext) {}
     
     @Override
-    protected boolean run(Telemetry telemetry) {
-        return scoreTask.step(telemetry);
+    protected boolean run(RobotContext robotContext) {
+        return scoreTask.step(robotContext);
     }
 }
 ```
@@ -251,8 +279,10 @@ public class AutonomousState implements State {
     }
     
     @Override
-    public State step() {
-        if (!taskStarted || autonomousSequence.step(telemetry)) {
+    public State step(RobotContext robotContext) {
+        robotContext.telemetry.addData("Autonomous", "Running sequence");
+        
+        if (!taskStarted || autonomousSequence.step(robotContext)) {
             taskStarted = true;
             return this;
         }
@@ -266,14 +296,51 @@ public class AutonomousState implements State {
 }
 ```
 
+### TeleOp with Gamepad Integration
+
+```java
+public class TeleOpDriveState implements State {
+    @Override
+    public State step(RobotContext robotContext) {
+        // Access both gamepads through the context
+        double drive = -robotContext.gamepad1.left_stick_y;
+        double strafe = robotContext.gamepad1.left_stick_x;
+        double turn = robotContext.gamepad1.right_stick_x;
+        
+        // Drive the robot
+        robot.drivetrain.drive(drive, strafe, turn);
+        
+        // Operator controls on gamepad2
+        if (robotContext.gamepad2.a) {
+            return new IntakeState();
+        }
+        if (robotContext.gamepad2.b) {
+            return new ScoreState();
+        }
+        
+        robotContext.telemetry.addData("Drive", "%.2f", drive);
+        robotContext.telemetry.addData("Strafe", "%.2f", strafe);
+        robotContext.telemetry.addData("Turn", "%.2f", turn);
+        
+        return this;
+    }
+    
+    @Override
+    public String getName() {
+        return "TeleOp Drive";
+    }
+}
+```
+
 ## Best Practices
 
 1. **Keep states focused**: Each state should represent one high-level behavior
-2. **Use tasks for reusability**: Create tasks for common actions that can be reused
-3. **Task ownership**: Task classes should live inside of their respective subsytem classes (A "MoveClaw" class should exist inside of your Claw class)
-4. **Leverage composition**: Use SequentialTask and ParallelTask to build complex behaviors
-5. **Handle timeouts**: Consider using timeouts in your tasks to prevent infinite loops
-6. **Test incrementally**: Build and test simple states/tasks before composing complex behaviors
+2. **Use RobotContext effectively**: Access telemetry and gamepads through the context parameter
+3. **Use tasks for reusability**: Create tasks for common actions that can be reused
+4. **Task ownership**: Task classes should live inside of their respective subsystem classes (A "MoveClaw" class should exist inside of your Claw class)
+5. **Leverage composition**: Use SequentialTask and ParallelTask to build complex behaviors
+6. **Handle timeouts**: Consider using timeouts in your tasks to prevent infinite loops
+7. **Test incrementally**: Build and test simple states/tasks before composing complex behaviors
 
 ## Contributing
 

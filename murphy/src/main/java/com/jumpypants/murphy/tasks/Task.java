@@ -1,8 +1,7 @@
-package com.jumpypants.murphy;
+package com.jumpypants.murphy.tasks;
 
+import com.jumpypants.murphy.RobotContext;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
  * Abstract base class for encapsulating robot operations and state transitions.
@@ -19,31 +18,31 @@ public abstract class Task {
 
     /**
      * Executes the task. Calls initialize() on first invocation, then run() on each subsequent call.
-     * @param telemetry Telemetry instance for debugging output
+     * @param robotContext contains references like telemetry, gamepads, and subsystems
      * @return true if the task should continue running, false if completed
      */
-    public final boolean step(Telemetry telemetry) {
-        if (telemetry == null) {
-            throw new IllegalArgumentException("Telemetry cannot be null");
+    public final boolean step(RobotContext robotContext) {
+        if (robotContext == null) {
+            throw new IllegalArgumentException("RobotContext cannot be null");
         }
         if (!initialized) {
             ELAPSED_TIME.reset();
-            initialize(telemetry);
+            initialize(robotContext);
             initialized = true;
         }
-        return run(telemetry);
+        return run(robotContext);
     }
 
     /**
      * Initializes the task. Called once before the first run() invocation.
-     * @param telemetry Telemetry instance for debugging output
+     * @param robotContext contains references like telemetry, gamepads, and subsystems
      */
-    protected abstract void initialize(Telemetry telemetry);
+    protected abstract void initialize(RobotContext robotContext);
 
     /**
      * Executes the main task logic. Called on each step() invocation after initialization.
-     * @param telemetry Telemetry instance for debugging output
+     * @param robotContext contains references like telemetry, gamepads, and subsystems
      * @return true to continue execution, false when task is complete
      */
-    protected abstract boolean run(Telemetry telemetry);
+    protected abstract boolean run(RobotContext robotContext);
 }
