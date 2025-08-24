@@ -2,9 +2,6 @@
 
 A lightweight and intuitive state machine library for FIRST Tech Challenge (FTC) robotics teams. Murphy provides a clean architecture for managing complex robot behaviors through states and tasks, making your autonomous and teleop code more organized and maintainable.
 
-<details>
-<summary><strong>Installation</strong></summary>
-
 ## Installation
 
 ### Using JitPack (Recommended)
@@ -38,8 +35,6 @@ implementation 'com.github.Jumpypants:Murphy:v1.0.0'
 
 3. Sync your project and you're ready to go.
 
-</details>
-
 ## Overview
 
 Murphy is built around two core concepts:
@@ -69,9 +64,6 @@ StateMachine → Current State → State.step(RobotContext) → Next State
 ```
 Task.step(RobotContext) → initialize() (first call only) → run() → return continue/stop
 ```
-
-<details open>
-<summary><strong>API Reference</strong></summary>
 
 ## API Reference
 
@@ -216,8 +208,6 @@ Task raceCondition = new ParallelTask(
 **Constructor:**
 - `ParallelTask(boolean stopOnFirstCompletion, Task... actions)`
   - `stopOnFirstCompletion`: If true, stops when any task completes; if false, waits for all tasks
-
-</details>
 
 ## Usage Examples
 
