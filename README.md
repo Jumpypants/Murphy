@@ -40,9 +40,6 @@ implementation 'com.github.Jumpypants:Murphy:v1.0.0'
 
 </details>
 
-<details>
-<summary><strong>Overview</strong></summary>
-
 ## Overview
 
 Murphy is built around two core concepts:
@@ -59,11 +56,6 @@ The library promotes a clean separation of concerns and makes complex robot beha
 - Elapsed time tracking for tasks
 - Lightweight with no external dependencies
 
-</details>
-
-<details>
-<summary><strong>Architecture</strong></summary>
-
 ## Architecture
 
 ### State Machine Flow
@@ -78,15 +70,12 @@ StateMachine → Current State → State.step(RobotContext) → Next State
 Task.step(RobotContext) → initialize() (first call only) → run() → return continue/stop
 ```
 
-</details>
-
 <details open>
-<summary><strong>API Reference (expand to view components)</strong></summary>
+<summary><strong>API Reference</strong></summary>
 
 ## API Reference
 
-<details>
-<summary><strong>RobotContext</strong></summary>
+### RobotContext
 
 A centralized container for shared resources used throughout the robot control system.
 You can extend this class to include other references of you want to.
@@ -103,10 +92,7 @@ RobotContext robotContext = new RobotContext(telemetry, gamepad1, gamepad2);
 **Constructor:**
 - `RobotContext(Telemetry telemetry, Gamepad gamepad1, Gamepad gamepad2)` - All parameters required and cannot be null
 
-</details>
-
-<details>
-<summary><strong>StateMachine</strong></summary>
+### StateMachine
 
 The main controller that manages state transitions and execution.
 
@@ -121,10 +107,7 @@ stateMachine.step();
 - `StateMachine(State initialState, RobotContext robotContext)` - Constructor with starting state and context
 - `step()` - Execute current state and handle transitions
 
-</details>
-
-<details>
-<summary><strong>State Interface</strong></summary>
+### State Interface
 
 Implement this interface to create custom robot states.
 
@@ -153,10 +136,7 @@ public class IntakingState implements State {
 - `step(RobotContext robotContext)` - Called every loop iteration, returns next state
 - `getName()` - Returns state name for telemetry display
 
-</details>
-
-<details>
-<summary><strong>Task (Abstract Class)</strong></summary>
+### Task (Abstract Class)
 
 Base class for all tasks. Extend this to create reusable actions.
 
@@ -199,10 +179,7 @@ public class MoveArmTask extends Task {
 - `initialize(RobotContext robotContext)` - Override for setup code
 - `run(RobotContext robotContext)` - Override for main execution logic
 
-</details>
-
-<details>
-<summary><strong>SequentialTask</strong></summary>
+### SequentialTask
 
 Executes multiple tasks in order, waiting for each to complete before starting the next.
 
@@ -217,10 +194,7 @@ Task sequence = new SequentialTask(
 **Constructor:**
 - `SequentialTask(Task... actions)` - Variable number of tasks to execute in order
 
-</details>
-
-<details>
-<summary><strong>ParallelTask</strong></summary>
+### ParallelTask
 
 Executes multiple tasks simultaneously.
 
@@ -245,15 +219,9 @@ Task raceCondition = new ParallelTask(
 
 </details>
 
-</details>
-
-<details>
-<summary><strong>Usage Examples</strong></summary>
-
 ## Usage Examples
 
-<details>
-<summary><strong>Basic State Machine</strong></summary>
+### Basic State Machine
 
 ```java
 @Autonomous
@@ -273,10 +241,7 @@ public class MyAutonomous extends LinearOpMode {
 }
 ```
 
-</details>
-
-<details>
-<summary><strong>Complex Task Composition</strong></summary>
+### Complex Task Composition
 
 ```java
 public class ScoreSequence extends Task {
@@ -308,10 +273,7 @@ public class ScoreSequence extends Task {
 }
 ```
 
-</details>
-
-<details>
-<summary><strong>State with Task Integration</strong></summary>
+### State with Task Integration
 
 ```java
 public class AutonomousState implements State {
@@ -344,10 +306,7 @@ public class AutonomousState implements State {
 }
 ```
 
-</details>
-
-<details>
-<summary><strong>TeleOp with Gamepad Integration</strong></summary>
+### TeleOp with Gamepad Integration
 
 ```java
 public class TeleOpDriveState implements State {
@@ -383,13 +342,6 @@ public class TeleOpDriveState implements State {
 }
 ```
 
-</details>
-
-</details>
-
-<details>
-<summary><strong>Best Practices</strong></summary>
-
 ## Best Practices
 
 1. **Keep states focused**: Each state should represent one high-level behavior
@@ -400,25 +352,13 @@ public class TeleOpDriveState implements State {
 6. **Handle timeouts**: Consider using timeouts in your tasks to prevent infinite loops
 7. **Test incrementally**: Build and test simple states/tasks before composing complex behaviors
 
-</details>
-
-<details>
-<summary><strong>Contributing</strong></summary>
-
 ## Contributing
 
 Feel free to submit issues and pull requests to improve the library!
 
-</details>
-
-<details>
-<summary><strong>License</strong></summary>
-
 ## License
 
 This project is open source and available under the MIT License.
-
-</details>
 
 ---
 
