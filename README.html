@@ -1,0 +1,225 @@
+
+<html>
+<head>
+    <title>Murphy README</title>
+    <style>
+        body { max-width: 900px; margin: 40px auto; padding: 20px; font-family: system-ui; line-height: 1.6; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        h1, h2, h3 { color: #333; }
+        blockquote { border-left: 4px solid #ddd; margin: 0; padding-left: 16px; }
+    </style>
+</head>
+<body>
+<h1>Murphy - FTC State Machine Library</h1>
+<p>A lightweight and intuitive state machine library for FIRST Tech Challenge (FTC) robotics teams. Murphy provides a clean architecture for managing complex robot behaviors through states and tasks, making your autonomous and teleop code more organized and maintainable.</p>
+<p>I highly recommend checking out the example project to help you understand how to use the library: <a href="https://github.com/Jumpypants/MurphyExample">Example Project</a></p>
+<h2>Installation</h2>
+<h3>Using JitPack (Recommended)</h3>
+<ol>
+<li>Add JitPack to your project's root <code>build.gradle</code> file (This file may have a comment saying you probably don't need to edit it. Don't worry about that):</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>allprojects {
+    repositories {
+        // ... other repositories
+        maven { url &#39;https://jitpack.io&#39; }
+    }
+}
+</code></pre></div>
+
+<ol>
+<li>Add the dependency to your <code>TeamCode/build.gradle</code> file:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="nx">dependencies</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">implementation</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">com</span><span class="p">.</span><span class="nx">github</span><span class="p">.</span><span class="nx">Jumpypants</span><span class="p">:</span><span class="nx">Murphy</span><span class="p">:</span><span class="nx">Tag</span><span class="err">&#39;</span>
+<span class="w">    </span><span class="c1">// ... other dependencies</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Replace <code>Tag</code> with the latest release version. You can find the latest version on the <a href="https://github.com/Jumpypants/Murphy/releases">releases page</a>.</p>
+<p><strong>Example with specific version:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nx">implementation</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">com</span><span class="p">.</span><span class="nx">github</span><span class="p">.</span><span class="nx">Jumpypants</span><span class="p">:</span><span class="nx">Murphy</span><span class="p">:</span><span class="nx">v3</span><span class="m m-Double">.1.1</span><span class="err">&#39;</span>
+</code></pre></div>
+
+<ol>
+<li>Sync your project and you're ready to go.</li>
+</ol>
+<h2>Overview</h2>
+<p>Murphy is built around three core concepts:</p>
+<ul>
+<li><strong>RobotContext</strong>: A shared container for your robot's subsystems, telemetry, and gamepads</li>
+<li><strong>States</strong>: High-level robot behaviors or cycle steps (e.g., "Intake", "Score", "Defend")</li>
+<li><strong>Tasks</strong>: Lower-level actions that can be composed and executed within the states (e.g., "Move arm to position", "Wait 2 seconds")</li>
+</ul>
+<p>The library promotes a clean separation of concerns and makes complex robot behaviors easier to reason about, debug, and maintain.</p>
+<h3>Key Features</h3>
+<ul>
+<li>Simple state machine implementation</li>
+<li>Task composition (sequential and parallel execution)</li>
+<li>Elapsed time tracking for tasks</li>
+<li>Centralized resource management through RobotContext</li>
+<li>Lightweight with no external dependencies</li>
+</ul>
+<h3>Basic Usage Example</h3>
+<p>Here's how you'd set up Murphy in a typical FTC OpMode:</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@TeleOp</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;My TeleOp&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyTeleOp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">OpMode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">StateMachine</span><span class="w"> </span><span class="n">stateMachine</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 1. Create your robot context with subsystems</span>
+<span class="w">        </span><span class="n">MyRobot</span><span class="w"> </span><span class="n">robotContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyRobot</span><span class="p">(</span><span class="n">telemetry</span><span class="p">,</span><span class="w"> </span><span class="n">gamepad1</span><span class="p">,</span><span class="w"> </span><span class="n">gamepad2</span><span class="p">,</span><span class="w"> </span><span class="cm">/* your subsystems */</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// 2. Create initial state and state machine</span>
+<span class="w">        </span><span class="n">stateMachine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StateMachine</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">IdleState</span><span class="p">(</span><span class="n">robotContext</span><span class="p">),</span><span class="w"> </span><span class="n">robotContext</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 3. Step the state machine each loop</span>
+<span class="w">        </span><span class="n">stateMachine</span><span class="p">.</span><span class="na">step</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2>Architecture</h2>
+<h3>Core Components</h3>
+<h4>1. RobotContext</h4>
+<p>Your team creates a class extending <code>RobotContext</code> to hold your robot's subsystems:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyRobot</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">RobotContext</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DriveTrain</span><span class="w"> </span><span class="n">driveTrain</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Arm</span><span class="w"> </span><span class="n">arm</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Claw</span><span class="w"> </span><span class="n">claw</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyRobot</span><span class="p">(</span><span class="n">Telemetry</span><span class="w"> </span><span class="n">telemetry</span><span class="p">,</span><span class="w"> </span><span class="n">Gamepad</span><span class="w"> </span><span class="n">gamepad1</span><span class="p">,</span><span class="w"> </span><span class="n">Gamepad</span><span class="w"> </span><span class="n">gamepad2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                   </span><span class="n">DriveTrain</span><span class="w"> </span><span class="n">driveTrain</span><span class="p">,</span><span class="w"> </span><span class="n">Arm</span><span class="w"> </span><span class="n">arm</span><span class="p">,</span><span class="w"> </span><span class="n">Claw</span><span class="w"> </span><span class="n">claw</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">telemetry</span><span class="p">,</span><span class="w"> </span><span class="n">gamepad1</span><span class="p">,</span><span class="w"> </span><span class="n">gamepad2</span><span class="p">);</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">driveTrain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driveTrain</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">arm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arm</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">claw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">claw</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h4>2. States</h4>
+<p>States represent high-level robot behaviors and handle state transitions:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IntakeState</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">MyRobot</span><span class="w"> </span><span class="n">robot</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="n">intakeTask</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">IntakeState</span><span class="p">(</span><span class="n">MyRobot</span><span class="w"> </span><span class="n">robot</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">robot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">robot</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">intakeTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SequentialTask</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span>
+<span class="w">            </span><span class="n">robot</span><span class="p">.</span><span class="na">arm</span><span class="p">.</span><span class="na">new</span><span class="w"> </span><span class="nf">MoveToPosition</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="n">ARM_DOWN</span><span class="p">),</span>
+<span class="w">            </span><span class="n">robot</span><span class="p">.</span><span class="na">claw</span><span class="p">.</span><span class="na">new</span><span class="w"> </span><span class="nf">OpenClaw</span><span class="p">(</span><span class="n">robot</span><span class="p">)</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="nf">step</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Handle driving</span>
+<span class="w">        </span><span class="n">robot</span><span class="p">.</span><span class="na">driveTrain</span><span class="p">.</span><span class="na">drive</span><span class="p">(</span><span class="n">robot</span><span class="p">.</span><span class="na">gamepad1</span><span class="p">.</span><span class="na">left_stick_x</span><span class="p">,</span><span class="w"> </span><span class="n">robot</span><span class="p">.</span><span class="na">gamepad1</span><span class="p">.</span><span class="na">left_stick_y</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Run intake task</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">intakeTask</span><span class="p">.</span><span class="na">step</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Task finished, transition to next state</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ScoreState</span><span class="p">(</span><span class="n">robot</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"> </span><span class="c1">// Stay in this state</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getName</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Intake&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h4>3. Tasks</h4>
+<p>Tasks encapsulate reusable actions and are typically inner classes of subsystems:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Arm</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// ... hardware setup ...</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MoveToPosition</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">targetPosition</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="nf">MoveToPosition</span><span class="p">(</span><span class="n">RobotContext</span><span class="w"> </span><span class="n">robotContext</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">targetPosition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">super</span><span class="p">(</span><span class="n">robotContext</span><span class="p">);</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">targetPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">targetPosition</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nd">@Override</span>
+<span class="w">        </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="n">RobotContext</span><span class="w"> </span><span class="n">robotContext</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Set up PID controller or motion profile</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nd">@Override</span>
+<span class="w">        </span><span class="kd">protected</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">RobotContext</span><span class="w"> </span><span class="n">robotContext</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Move arm and return true while moving, false when done</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">abs</span><span class="p">(</span><span class="n">getCurrentPosition</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">targetPosition</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">TOLERANCE</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>State Machine Flow</h3>
+<div class="codehilite"><pre><span></span><code><span class="nv">StateMachine</span><span class="w"> </span>→<span class="w"> </span><span class="nv">Current</span><span class="w"> </span><span class="nv">State</span><span class="w"> </span>→<span class="w"> </span><span class="nv">State</span>.<span class="nv">step</span><span class="ss">(</span><span class="nv">RobotContext</span><span class="ss">)</span><span class="w"> </span>→<span class="w"> </span><span class="k">Next</span><span class="w"> </span><span class="nv">State</span>
+<span class="w">     </span>↑<span class="w">                                                      </span>↓
+<span class="w">     </span>└───────────<span class="w"> </span><span class="nv">Update</span><span class="w"> </span><span class="nv">current</span><span class="w"> </span><span class="nv">state</span><span class="w"> </span>←───────────────────┘
+</code></pre></div>
+
+<h3>Task Execution Flow</h3>
+<div class="codehilite"><pre><span></span><code><span class="nv">Task</span>.<span class="nv">step</span><span class="ss">(</span><span class="nv">RobotContext</span><span class="ss">)</span><span class="w"> </span>→<span class="w"> </span><span class="nv">initialize</span><span class="ss">()</span><span class="w"> </span><span class="ss">(</span><span class="nv">first</span><span class="w"> </span><span class="k">call</span><span class="w"> </span><span class="nl">only</span><span class="ss">)</span><span class="w"> </span>→<span class="w"> </span><span class="nv">run</span><span class="ss">()</span><span class="w"> </span>→<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">continue</span><span class="o">/</span><span class="nv">stop</span>
+</code></pre></div>
+
+<h2>Best Practices</h2>
+<ol>
+<li><strong>Keep states focused</strong>: Each state should represent one high-level behavior</li>
+<li><strong>Extend RobotContext</strong>: Create your own robot class extending RobotContext to include your subsystems</li>
+<li><strong>Use RobotContext effectively</strong>: Access telemetry and gamepads through the context parameter</li>
+<li><strong>Use tasks for reusability</strong>: Create tasks for common actions that can be reused across states</li>
+<li><strong>Task ownership</strong>: Task classes should live inside of their respective subsystem classes (A "MoveClaw" class should exist inside of your Claw class)</li>
+<li><strong>Leverage composition</strong>: Use SequentialTask and ParallelTask to build complex behaviors</li>
+<li><strong>Handle timeouts</strong>: Consider using timeouts in your tasks to prevent infinite loops</li>
+<li><strong>Test incrementally</strong>: Build and test simple states/tasks before composing complex behaviors</li>
+<li><strong>Return patterns</strong>: States return <code>this</code> to stay in current state, or a new state to transition. Tasks return <code>true</code> to continue, <code>false</code> when complete</li>
+<li><strong>Use ELAPSED_TIME</strong>: Tasks have built-in <code>ELAPSED_TIME</code> for implementing timeouts and time-based logic</li>
+</ol>
+<h3>Task Composition Examples</h3>
+<p><strong>Sequential Tasks</strong> (one after another):</p>
+<div class="codehilite"><pre><span></span><code><span class="k">new</span><span class="w"> </span><span class="n">SequentialTask</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span>
+<span class="w">    </span><span class="n">arm</span><span class="p">.</span><span class="na">new</span><span class="w"> </span><span class="nf">MoveToPosition</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH_POSITION</span><span class="p">),</span>
+<span class="w">    </span><span class="n">claw</span><span class="p">.</span><span class="na">new</span><span class="w"> </span><span class="nf">OpenClaw</span><span class="p">(</span><span class="n">robotContext</span><span class="p">),</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">WaitTask</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="w"> </span><span class="c1">// Wait 1 second</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<p><strong>Parallel Tasks</strong> (simultaneously):</p>
+<div class="codehilite"><pre><span></span><code><span class="k">new</span><span class="w"> </span><span class="n">ParallelTask</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="c1">// false = wait for all to complete</span>
+<span class="w">    </span><span class="n">arm</span><span class="p">.</span><span class="na">new</span><span class="w"> </span><span class="nf">MoveToPosition</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH_POSITION</span><span class="p">),</span>
+<span class="w">    </span><span class="n">claw</span><span class="p">.</span><span class="na">new</span><span class="w"> </span><span class="nf">RotateWrist</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span><span class="w"> </span><span class="n">SCORING_ANGLE</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<p><strong>Nested Composition</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">new</span><span class="w"> </span><span class="n">SequentialTask</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// First: Move arm and rotate wrist simultaneously</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">ParallelTask</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="n">arm</span><span class="p">.</span><span class="na">new</span><span class="w"> </span><span class="nf">MoveToPosition</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH_POSITION</span><span class="p">),</span>
+<span class="w">        </span><span class="n">claw</span><span class="p">.</span><span class="na">new</span><span class="w"> </span><span class="nf">RotateWrist</span><span class="p">(</span><span class="n">robotContext</span><span class="p">,</span><span class="w"> </span><span class="n">SCORING_ANGLE</span><span class="p">)</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="c1">// Then: Release the game piece</span>
+<span class="w">    </span><span class="n">claw</span><span class="p">.</span><span class="na">new</span><span class="w"> </span><span class="nf">OpenClaw</span><span class="p">(</span><span class="n">robotContext</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<h2>Contributing</h2>
+<p>Feel free to submit issues and pull requests to improve the library!</p>
+<h2>License</h2>
+<p>This project is open source and available under the MIT License.</p>
+<hr />
+<p><em>Made for the FTC community by Daniel Ben-Tsvi from Fremont High School Infernobots</em></p>
+</body>
+</html>
