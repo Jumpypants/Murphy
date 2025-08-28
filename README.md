@@ -39,21 +39,56 @@ implementation 'com.github.Jumpypants:Murphy:v1.0.0'
 
 ## Overview
 
-Murphy is built around two core concepts:
+### The Problem
+FTC robots need to perform complex sequences of actions—from autonomous routines that score multiple game pieces to teleop behaviors that coordinate multiple subsystems. As your robot becomes more sophisticated, managing all these behaviors in traditional code becomes messy, hard to debug, and difficult to modify.
 
-- **States**: High-level robot behaviors or cycle steps (e.g., "Intake", "Score", "Defend")
-- **Tasks**: Lower-level actions that can be composed and executed within the states (e.g., "Move arm to position", "Wait 2 seconds")
+### The Solution
+Think of Murphy like a **playbook for your robot**. Just like a football team has different plays (offense, defense, special teams) and each play has specific steps, your robot can have different **States** for major behaviors, and each state can execute **Tasks** to get things done.
 
-The library promotes a clean separation of concerns and makes complex robot behaviors easier to reason about, debug, and maintain.
+**Real FTC Example:**
+```
+Autonomous Routine:
+├── "Drive to Game Elements" State
+│   ├── Drive forward 24 inches (Task)
+│   ├── Turn 90 degrees (Task)
+│   └── Wait 0.5 seconds (Task)
+├── "Score Game Element" State  
+│   ├── Raise arm to scoring position (Task)
+│   ├── Release game element (Task)
+│   └── Lower arm (Task)
+└── "Park" State
+    └── Drive to parking zone (Task)
+```
+
+### Core Concepts
+
+- **States**: Major robot behaviors or phases (e.g., "Drive to Goal", "Score Game Piece", "Defend")
+  - Like different "modes" your robot can be in
+  - Each state decides what the robot should do and when to switch to another state
+  
+- **Tasks**: Individual actions that make up a state (e.g., "Move arm to position", "Drive 12 inches", "Wait 2 seconds")
+  - Like individual steps in a recipe
+  - Can be reused across different states
+  - Can run one after another (sequential) or at the same time (parallel)
+
+### Why This Helps
+- **Organized**: Your code mirrors how you think about robot behavior
+- **Debuggable**: Easy to see which state/task is running and troubleshoot problems
+- **Reusable**: Write a "MoveArm" task once, use it everywhere
+- **Flexible**: Change your autonomous by rearranging states, not rewriting everything
+- **Team-Friendly**: New programmers can understand and contribute more easily
 
 ### Key Features
 
-- Simple state machine implementation
-- Task composition (sequential and parallel execution)
-- Elapsed time tracking for tasks
-- Lightweight with no external dependencies
+- 🎯 **Simple to learn** - If you can think through your robot's behavior step-by-step, you can use Murphy
+- 🔧 **Task composition** - Run tasks sequentially (one after another) or in parallel (at the same time)
+- ⏱️ **Built-in timing** - Every task knows how long it's been running
+- 🪶 **Lightweight** - No external dependencies, won't slow down your robot
+- 🤝 **FTC-native** - Designed specifically for FTC teams and robot behaviors
 
 ## Architecture
+
+Now that you understand the concepts, here's how Murphy works under the hood:
 
 ### State Machine Flow
 ```
