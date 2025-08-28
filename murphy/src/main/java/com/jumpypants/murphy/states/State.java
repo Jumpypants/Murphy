@@ -15,10 +15,9 @@ public interface State {
     /**
      * Executes the state logic and determines the next state transition.
      * Called by the StateMachine on each iteration.
-     * @param robotContext contains references like telemetry and gamepads.
      * @return The next state to execute (typically returns itself until transition conditions are met)
      */
-    State step(RobotContext robotContext);
+    State step();
 
     /**
      * Returns the display name of this state.

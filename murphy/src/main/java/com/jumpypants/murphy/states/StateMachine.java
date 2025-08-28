@@ -32,7 +32,7 @@ public class StateMachine {
             throw new IllegalStateException("Current state is null. StateMachine cannot operate without a valid state.");
         }
         robotContext.telemetry.addData("State", currentState.getName());
-        State nextState = currentState.step(robotContext);
+        State nextState = currentState.step();
         if (nextState == null) {
             throw new IllegalStateException("State '" + currentState.getName() + "' returned null as the next state. States must return a valid State instance.");
         }

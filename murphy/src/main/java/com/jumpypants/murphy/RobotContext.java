@@ -10,30 +10,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * to States, Tasks, and other components without requiring multiple parameters.
  *
  * <p>This class can be extended to include additional shared resources as needed.
- *
- * <p>RobotContext is designed to be immutable once created, with all fields being final
- * to ensure thread safety and prevent accidental modification during robot operation.
- *
- * <p>Usage example:
- * <pre>{@code
- * // Create your own concrete subclass that adds subsystems / hardware references
- * public class MyRobotContext extends RobotContext {
- *     public MyRobotContext(Telemetry telemetry, Gamepad gamepad1, Gamepad gamepad2) {
- *         super(telemetry, gamepad1, gamepad2);
- *     }
- *     // public final Arm arm;
- *     // public final DriveTrain drive;
- *     // etc.
- * }
- *
- * // Creating a state machine in your OpMode or main robot class
- * RobotContext context = new MyRobotContext(telemetry, gamepad1, gamepad2);
- * StateMachine stateMachine = new StateMachine(initialState, context);
- *
- * // Passing in RobotContext to a Task
- * Task myTask = new MyCustomTask();
- * myTask.step(context);
- * }</pre>
  */
 public abstract class RobotContext {
     /**
