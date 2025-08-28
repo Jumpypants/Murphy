@@ -70,10 +70,23 @@ Task.step(RobotContext) → initialize() (first call only) → run() → return 
 ### RobotContext
 
 A centralized container for shared resources used throughout the robot control system.
-You can extend this class to include other references of you want to.
+You extend this abstract class to include other references if you want to (subsystems, hardware, etc.).
 
 ```java
-RobotContext robotContext = new RobotContext(telemetry, gamepad1, gamepad2);
+// Define your concrete context (add subsystem fields as needed)
+public class MyRobotContext extends RobotContext {
+    // public final Arm arm;
+    // public final DriveTrain drive;
+
+    public MyRobotContext(Telemetry telemetry, Gamepad gamepad1, Gamepad gamepad2) {
+        super(telemetry, gamepad1, gamepad2);
+        // arm = new Arm(...);
+        // drive = new DriveTrain(...);
+    }
+}
+
+// Usage
+RobotContext robotContext = new MyRobotContext(telemetry, gamepad1, gamepad2);
 ```
 
 **Fields:**
@@ -81,8 +94,8 @@ RobotContext robotContext = new RobotContext(telemetry, gamepad1, gamepad2);
 - `gamepad1` - Primary gamepad controller (typically driver)
 - `gamepad2` - Secondary gamepad controller (typically operator)
 
-**Constructor:**
-- `RobotContext(Telemetry telemetry, Gamepad gamepad1, Gamepad gamepad2)` - All parameters required and cannot be null
+**Constructor (for subclasses):**
+- `RobotContext(Telemetry telemetry, Gamepad gamepad1, Gamepad gamepad2)` - All parameters required and cannot be null. Since RobotContext is abstract, instantiate a subclass (e.g., `MyRobotContext`).
 
 ### StateMachine
 
@@ -218,7 +231,7 @@ Task raceCondition = new ParallelTask(
 public class MyAutonomous extends LinearOpMode {
     @Override
     public void runOpMode() {
-        RobotContext robotContext = new RobotContext(telemetry, gamepad1, gamepad2);
+        RobotContext robotContext = new MyRobotContext(telemetry, gamepad1, gamepad2);
         StateMachine stateMachine = new StateMachine(new StartState(), robotContext);
         
         waitForStart();

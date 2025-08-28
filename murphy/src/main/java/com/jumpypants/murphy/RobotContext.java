@@ -16,8 +16,18 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  *
  * <p>Usage example:
  * <pre>{@code
+ * // Create your own concrete subclass that adds subsystems / hardware references
+ * public class MyRobotContext extends RobotContext {
+ *     public MyRobotContext(Telemetry telemetry, Gamepad gamepad1, Gamepad gamepad2) {
+ *         super(telemetry, gamepad1, gamepad2);
+ *     }
+ *     // public final Arm arm;
+ *     // public final DriveTrain drive;
+ *     // etc.
+ * }
+ *
  * // Creating a state machine in your OpMode or main robot class
- * RobotContext context = new RobotContext(telemetry, gamepad1, gamepad2);
+ * RobotContext context = new MyRobotContext(telemetry, gamepad1, gamepad2);
  * StateMachine stateMachine = new StateMachine(initialState, context);
  *
  * // Passing in RobotContext to a Task
@@ -25,7 +35,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * myTask.step(context);
  * }</pre>
  */
-public class RobotContext {
+public abstract class RobotContext {
     /**
      * Telemetry instance for sending debug and status information to the driver station.
      * Used by States and Tasks to display real-time robot status, sensor values,
