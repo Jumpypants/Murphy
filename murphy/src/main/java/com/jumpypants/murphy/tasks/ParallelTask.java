@@ -16,7 +16,8 @@ public class ParallelTask extends Task {
      *                             or wait for all tasks to complete
      * @param actions Tasks to execute in parallel
      */
-    public ParallelTask(boolean stopOnFirstCompletion, Task... actions) {
+    public ParallelTask(RobotContext robotContext, boolean stopOnFirstCompletion, Task... actions) {
+        super(robotContext);
         if (actions == null) {
             throw new IllegalArgumentException("Actions array cannot be null");
         }
@@ -40,7 +41,7 @@ public class ParallelTask extends Task {
         boolean runAgain = false;
 
         for (Task action : actions) {
-            if (action.step(robotContext)) {
+            if (action.step()) {
                 runAgain = true;
                 if (stopOnFirstCompletion) {
                     break;

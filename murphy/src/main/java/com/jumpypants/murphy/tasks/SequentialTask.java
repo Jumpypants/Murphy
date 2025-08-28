@@ -14,7 +14,8 @@ public class SequentialTask extends Task {
      * Creates a sequential task that executes tasks in the specified order.
      * @param actions Tasks to execute sequentially
      */
-    public SequentialTask(Task... actions) {
+    public SequentialTask(RobotContext robotContext, Task... actions) {
+        super(robotContext);
         if (actions == null) {
             throw new IllegalArgumentException("Actions array cannot be null");
         }
@@ -40,7 +41,7 @@ public class SequentialTask extends Task {
         }
 
         // Run the current action
-        if (!actions[currentActionIndex].step(robotContext)) {
+        if (!actions[currentActionIndex].step()) {
             // Current action completed, move to next
             currentActionIndex++;
         }
