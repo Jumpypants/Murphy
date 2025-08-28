@@ -12,6 +12,7 @@ public class SequentialTask extends Task {
 
     /**
      * Creates a sequential task that executes tasks in the specified order.
+     * @param robotContext contains references like telemetry, gamepads, and subsystems
      * @param actions Tasks to execute sequentially
      */
     public SequentialTask(RobotContext robotContext, Task... actions) {

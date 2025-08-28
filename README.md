@@ -2,6 +2,8 @@
 
 A lightweight and intuitive state machine library for FIRST Tech Challenge (FTC) robotics teams. Murphy provides a clean architecture for managing complex robot behaviors through states and tasks, making your autonomous and teleop code more organized and maintainable.
 
+I highly recommend checking out the example project to helo you understand how to use the library: [Example Project](https://github.com/Jumpypants/MurphyExample)
+
 ## Installation
 
 ### Using JitPack (Recommended)

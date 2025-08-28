@@ -12,6 +12,7 @@ public class ParallelTask extends Task {
 
     /**
      * Creates a parallel task that executes multiple tasks simultaneously.
+     * @param robotContext contains references like telemetry, gamepads, and subsystems
      * @param stopOnFirstCompletion Whether to stop execution when the first task completes,
      *                             or wait for all tasks to complete
      * @param actions Tasks to execute in parallel
