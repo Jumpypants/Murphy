@@ -4,6 +4,8 @@ A lightweight and intuitive state machine library for FIRST Tech Challenge (FTC)
 
 I highly recommend checking out the example project to help you understand how to use the library: [Example Project](https://github.com/Jumpypants/MurphyExample)
 
+If you need help, have any questions, or find a bug, just add an issue on this repository with the appropriate tag and I will do my best to solve your problem.
+
 ## Installation
 
 ### Using JitPack (Recommended)
