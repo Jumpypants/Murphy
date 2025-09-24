@@ -1,14 +1,17 @@
 package com.jumpypants.murphy.tasks;
 
 import com.jumpypants.murphy.RobotContext;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Executes multiple tasks concurrently.
  */
 public class ParallelTask extends Task {
     private final Task[] actions;
-
     private final boolean stopOnFirstCompletion;
+    private List<Task> activeTasks;
 
     /**
      * Creates a parallel task that executes multiple tasks simultaneously.
@@ -35,21 +38,34 @@ public class ParallelTask extends Task {
     }
 
     @Override
-    protected void initialize(RobotContext robotContext) {}
+    protected void initialize(RobotContext robotContext) {
+        // Initialize with all tasks active
+        activeTasks = new ArrayList<>(Arrays.asList(actions));
+    }
 
     @Override
     protected boolean run(RobotContext robotContext) {
-        boolean runAgain = false;
+        if (activeTasks.isEmpty()) {
+            return false;
+        }
 
-        for (Task action : actions) {
-            if (action.step()) {
-                runAgain = true;
+        // Use iterator to safely remove completed tasks while iterating
+        var iterator = activeTasks.iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+
+            if (!task.step()) {
+                // Task completed, remove from active list
+                iterator.remove();
+
+                // If we should stop on first completion, return false immediately
                 if (stopOnFirstCompletion) {
-                    break;
+                    return false;
                 }
             }
         }
 
-        return runAgain;
+        // Continue running if any tasks are still active
+        return !activeTasks.isEmpty();
     }
 }
