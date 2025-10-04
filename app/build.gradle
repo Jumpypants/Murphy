@@ -4,12 +4,13 @@ plugins {
 
 android {
     namespace 'com.jumpypants.murphy'
-    compileSdk 35
+    compileSdk 30
 
     defaultConfig {
         applicationId "com.jumpypants.murphy"
         minSdk 24
-        targetSdk 35
+        //noinspection ExpiredTargetSdkVersion
+        targetSdk 28
         versionCode 1
         versionName "1.0"
 
