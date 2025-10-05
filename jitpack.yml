@@ -1,4 +1,4 @@
 jdk:
   - openjdk17
 install:
-  - ./gradlew :murphy:assembleRelease --stacktrace
+  - ./gradlew :murphy:publishToMavenLocal --stacktrace
