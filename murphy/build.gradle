@@ -8,11 +8,11 @@ version = '1.0.0'                 // JitPack will override this with your Git ta
 
 android {
     namespace 'com.jumpypants.murphy'
-    compileSdk 35
+    compileSdk 30
 
     defaultConfig {
         minSdk 24
-        targetSdk 35
+        targetSdk 30
         versionCode 1
         versionName "1.0.0" // keep in sync if you like, but JitPack uses the Git tag
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -30,6 +30,10 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
+    lint {
+        disable 'ExpiredTargetSdkVersion'
+    }
+
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -40,14 +44,11 @@ android {
 
 dependencies {
     implementation libs.appcompat
-    implementation libs.material
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 
     implementation 'org.firstinspires.ftc:RobotCore:10.2.0'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
 }
 
 // Configure the publication AFTER the Android plugin wires up the release component
