@@ -22,12 +22,11 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew assembleRelease
+    - name: Build murphy library
+      run: ./gradlew :murphy:assembleRelease
 
-    - name: Upload APK
+    - name: Upload AAR
       uses: actions/upload-artifact@v3
       with:
-        name: app-release
-        path: app/build/outputs/apk/release/*.apk
-
+        name: murphy-release
+        path: murphy/build/outputs/aar/*.aar

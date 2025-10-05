@@ -36,4 +36,41 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
+    // Force compatible versions for compileSdk 30
+    constraints {
+        implementation('androidx.appcompat:appcompat:1.3.1') {
+            because 'newer versions require compileSdk 34+'
+        }
+        implementation('androidx.appcompat:appcompat-resources:1.3.1') {
+            because 'newer versions require compileSdk 34+'
+        }
+        implementation('androidx.core:core:1.6.0') {
+            because 'newer versions require compileSdk 34+'
+        }
+        implementation('androidx.core:core-ktx:1.6.0') {
+            because 'newer versions require compileSdk 34+'
+        }
+        implementation('androidx.fragment:fragment:1.3.6') {
+            because 'newer versions require compileSdk 31+'
+        }
+        implementation('androidx.activity:activity:1.3.1') {
+            because 'newer versions require compileSdk 34+'
+        }
+        implementation('androidx.lifecycle:lifecycle-runtime:2.3.1') {
+            because 'newer versions require compileSdk 33+'
+        }
+        implementation('androidx.lifecycle:lifecycle-viewmodel:2.3.1') {
+            because 'newer versions require compileSdk 33+'
+        }
+        implementation('androidx.lifecycle:lifecycle-livedata:2.3.1') {
+            because 'newer versions require compileSdk 33+'
+        }
+        implementation('androidx.lifecycle:lifecycle-livedata-core:2.3.1') {
+            because 'newer versions require compileSdk 33+'
+        }
+        implementation('androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1') {
+            because 'newer versions require compileSdk 33+'
+        }
+    }
 }
