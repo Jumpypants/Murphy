@@ -26,7 +26,7 @@ jobs:
       run: ./gradlew :murphy:assembleRelease
 
     - name: Upload AAR
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: murphy-release
         path: murphy/build/outputs/aar/*.aar
