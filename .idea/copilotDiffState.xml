@@ -21,6 +21,15 @@
             </PendingDiffInfo>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/murphy/src/main/AndroidManifest.xml">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/murphy/src/main/AndroidManifest.xml" />
+              <option name="originalContent" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#10;&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;&#10;&#10;    &lt;application&#10;        android:allowBackup=&quot;true&quot;&#10;        android:icon=&quot;@mipmap/ic_launcher&quot;&#10;        android:label=&quot;@string/app_name&quot;&#10;        android:roundIcon=&quot;@mipmap/ic_launcher_round&quot;&#10;        android:supportsRtl=&quot;true&quot;&#10;        android:theme=&quot;@style/Theme.Murphy&quot; /&gt;&#10;&#10;&lt;/manifest&gt;" />
+              <option name="updatedContent" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#10;&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; /&gt;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
