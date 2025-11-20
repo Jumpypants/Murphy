@@ -1,6 +1,6 @@
 package com.jumpypants.murphy.tasks;
 
-import com.jumpypants.murphy.RobotContext;
+import com.jumpypants.murphy.util.RobotContext;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**

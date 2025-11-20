@@ -1,34 +1,34 @@
 package com.jumpypants.murphy.tasks;
 
-import com.jumpypants.murphy.RobotContext;
+import com.jumpypants.murphy.util.RobotContext;
 
 /**
  * Executes multiple tasks in sequential order.
  */
 public class SequentialTask extends Task {
-    private final Task[] actions;
+    private final Task[] TASKS;
 
-    private int currentActionIndex = 0;
+    private int currentTaskIndex = 0;
 
     /**
      * Creates a sequential task that executes tasks in the specified order.
      * @param robotContext contains references like telemetry, gamepads, and subsystems
-     * @param actions Tasks to execute sequentially
+     * @param tasks Tasks to execute sequentially
      */
-    public SequentialTask(RobotContext robotContext, Task... actions) {
+    public SequentialTask(RobotContext robotContext, Task... tasks) {
         super(robotContext);
-        if (actions == null) {
-            throw new IllegalArgumentException("Actions array cannot be null");
+        if (tasks == null) {
+            throw new IllegalArgumentException("Tasks array cannot be null");
         }
-        if (actions.length == 0) {
-            throw new IllegalArgumentException("Actions array cannot be empty");
+        if (tasks.length == 0) {
+            throw new IllegalArgumentException("Tasks array cannot be empty");
         }
-        for (int i = 0; i < actions.length; i++) {
-            if (actions[i] == null) {
-                throw new IllegalArgumentException("Action at index " + i + " cannot be null");
+        for (int i = 0; i < tasks.length; i++) {
+            if (tasks[i] == null) {
+                throw new IllegalArgumentException("Task at index " + i + " cannot be null");
             }
         }
-        this.actions = actions;
+        this.TASKS = tasks;
     }
 
     @Override
@@ -36,18 +36,18 @@ public class SequentialTask extends Task {
 
     @Override
     protected boolean run(RobotContext robotContext) {
-        // If we've completed all actions, return false to indicate completion
-        if (currentActionIndex >= actions.length) {
+        // If we've completed all tasks, return false to indicate completion
+        if (currentTaskIndex >= TASKS.length) {
             return false;
         }
 
-        // Run the current action
-        if (!actions[currentActionIndex].step()) {
-            // Current action completed, move to next
-            currentActionIndex++;
+        // Run the current task
+        if (!TASKS[currentTaskIndex].step()) {
+            // Current task completed, move to next
+            currentTaskIndex++;
         }
 
-        // Continue running if we haven't completed all actions yet
-        return currentActionIndex < actions.length;
+        // Continue running if we haven't completed all tasks yet
+        return currentTaskIndex < TASKS.length;
     }
 }

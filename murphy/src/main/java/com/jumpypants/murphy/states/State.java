@@ -1,7 +1,5 @@
 package com.jumpypants.murphy.states;
 
-import com.jumpypants.murphy.RobotContext;
-
 /**
  * Represents a discrete robot state with associated behavior and transitions.
  * States define robot behavior modes such as idle, intake, or scoring operations.

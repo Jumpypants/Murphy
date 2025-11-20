@@ -1,4 +1,4 @@
-package com.jumpypants.murphy;
+package com.jumpypants.murphy.util;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 

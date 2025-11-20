@@ -1,6 +1,6 @@
 package com.jumpypants.murphy.tasks;
 
-import com.jumpypants.murphy.RobotContext;
+import com.jumpypants.murphy.util.RobotContext;
 
 public class WaitTask extends Task{
 

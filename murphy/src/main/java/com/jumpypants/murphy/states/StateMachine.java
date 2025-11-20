@@ -1,6 +1,6 @@
 package com.jumpypants.murphy.states;
 
-import com.jumpypants.murphy.RobotContext;
+import com.jumpypants.murphy.util.RobotContext;
 
 /**
  * Manages robot state execution and transitions.
