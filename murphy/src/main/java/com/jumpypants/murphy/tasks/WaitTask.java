@@ -4,7 +4,7 @@ import com.jumpypants.murphy.util.RobotContext;
 
 public class WaitTask extends Task{
 
-    private final double seconds;
+    private final double SECONDS;
 
     /**
      * Creates a new Task with the provided RobotContext.
@@ -14,7 +14,7 @@ public class WaitTask extends Task{
      */
     public WaitTask(RobotContext robotContext, double seconds) {
         super(robotContext);
-        this.seconds = seconds;
+        this.SECONDS = seconds;
     }
 
     @Override
@@ -22,6 +22,6 @@ public class WaitTask extends Task{
 
     @Override
     protected boolean run(RobotContext robotContext) {
-        return ELAPSED_TIME.seconds() < seconds;
+        return ELAPSED_TIME.seconds() < SECONDS;
     }
 }

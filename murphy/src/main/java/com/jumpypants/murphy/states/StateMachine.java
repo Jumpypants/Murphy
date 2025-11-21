@@ -8,7 +8,7 @@ import com.jumpypants.murphy.util.RobotContext;
  */
 public class StateMachine {
     private State currentState;
-    private final RobotContext robotContext;
+    private final RobotContext ROBOT_CONTEXT;
 
     /**
      * Creates a state machine with the specified initial state.
@@ -20,7 +20,7 @@ public class StateMachine {
             throw new IllegalArgumentException("Initial state cannot be null");
         }
         currentState = initialState;
-        this.robotContext = robotContext;
+        this.ROBOT_CONTEXT = robotContext;
     }
 
     /**
@@ -31,7 +31,7 @@ public class StateMachine {
         if (currentState == null) {
             throw new IllegalStateException("Current state is null. StateMachine cannot operate without a valid state.");
         }
-        robotContext.telemetry.addData("State", currentState.getName());
+        ROBOT_CONTEXT.TELEMETRY.addData("State", currentState.getName());
         State nextState = currentState.step();
         if (nextState == null) {
             throw new IllegalStateException("State '" + currentState.getName() + "' returned null as the next state. States must return a valid State instance.");

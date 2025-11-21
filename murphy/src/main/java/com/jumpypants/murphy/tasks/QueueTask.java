@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * Executes tasks in queue order (FIFO - First In, First Out).
  * Tasks can be dynamically added to the queue during execution.
+ * You should probably place QueueTasks inside of a parallel task with another task that determines when to stop.
  */
 public class QueueTask extends Task {
     private final ArrayList<Task> TASKS;

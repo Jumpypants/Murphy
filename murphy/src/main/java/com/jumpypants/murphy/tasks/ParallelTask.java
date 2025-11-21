@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ParallelTask extends Task {
     private final Task[] TASKS;
-    private final boolean stopOnFirstCompletion;
+    private final boolean STOP_ON_FIRST_COMPLETION;
     private List<Task> activeTasks;
 
     /**
@@ -34,7 +34,7 @@ public class ParallelTask extends Task {
             }
         }
         this.TASKS = tasks;
-        this.stopOnFirstCompletion = stopOnFirstCompletion;
+        this.STOP_ON_FIRST_COMPLETION = stopOnFirstCompletion;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ParallelTask extends Task {
                 iterator.remove();
 
                 // If we should stop on first completion, return false immediately
-                if (stopOnFirstCompletion) {
+                if (STOP_ON_FIRST_COMPLETION) {
                     return false;
                 }
             }

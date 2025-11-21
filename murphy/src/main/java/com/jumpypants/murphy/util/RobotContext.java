@@ -17,21 +17,21 @@ public abstract class RobotContext {
      * Used by States and Tasks to display real-time robot status, sensor values,
      * and operational feedback.
      */
-    public final Telemetry telemetry;
+    public final Telemetry TELEMETRY;
 
     /**
      * Primary gamepad controller (typically the driver controller).
      * Provides access to joystick inputs, button states, and trigger values
      * for robot movement and primary control functions.
      */
-    public final Gamepad gamepad1;
+    public final Gamepad GAMEPAD1;
 
     /**
      * Secondary gamepad controller (typically the operator controller).
      * Used for auxiliary controls such as subsystem operations, preset positions,
      * and advanced robot functions that don't interfere with primary driving.
      */
-    public final Gamepad gamepad2;
+    public final Gamepad GAMEPAD2;
 
     /**
      * Creates a new RobotContext with the specified telemetry and gamepad references.
@@ -53,8 +53,8 @@ public abstract class RobotContext {
             throw new IllegalArgumentException("Gamepad2 cannot be null");
         }
 
-        this.telemetry = telemetry;
-        this.gamepad1 = gamepad1;
-        this.gamepad2 = gamepad2;
+        this.TELEMETRY = telemetry;
+        this.GAMEPAD1 = gamepad1;
+        this.GAMEPAD2 = gamepad2;
     }
 }

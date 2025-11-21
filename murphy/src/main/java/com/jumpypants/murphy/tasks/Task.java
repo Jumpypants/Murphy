@@ -15,14 +15,14 @@ public abstract class Task {
      */
     protected final ElapsedTime ELAPSED_TIME = new ElapsedTime();
     protected boolean initialized = false;
-    protected final RobotContext robotContext;
+    protected final RobotContext ROBOT_CONTEXT;
 
     /**
      * Creates a new Task with the provided RobotContext.
      * @param robotContext contains references like telemetry, gamepads, and subsystems
      */
     public Task(RobotContext robotContext) {
-        this.robotContext = robotContext;
+        this.ROBOT_CONTEXT = robotContext;
     }
 
     /**
@@ -30,15 +30,15 @@ public abstract class Task {
      * @return true if the task should continue running, false if completed
      */
     public final boolean step() {
-        if (robotContext == null) {
+        if (ROBOT_CONTEXT == null) {
             throw new IllegalArgumentException("RobotContext cannot be null");
         }
         if (!initialized) {
             ELAPSED_TIME.reset();
-            initialize(robotContext);
+            initialize(ROBOT_CONTEXT);
             initialized = true;
         }
-        return run(robotContext);
+        return run(ROBOT_CONTEXT);
     }
 
     /**
