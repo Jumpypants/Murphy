@@ -11,14 +11,25 @@ import java.util.ArrayList;
  */
 public class QueueTask extends Task {
     private final ArrayList<Task> TASKS;
+    private final boolean STOP_ON_EMPTY;
 
     /**
      * Creates an empty queue task.
      * @param robotContext contains references like telemetry, gamepads, and subsystems
      */
     public QueueTask(RobotContext robotContext) {
+        this(robotContext, false);
+    }
+
+    /**
+     * Creates an empty queue task.
+     * @param robotContext contains references like telemetry, gamepads, and subsystems
+     * @param stopOnEmpty if true, task stops when queue is empty; if false, task continues running
+     */
+    public QueueTask(RobotContext robotContext, boolean stopOnEmpty) {
         super(robotContext);
         TASKS = new ArrayList<>();
+        this.STOP_ON_EMPTY = stopOnEmpty;
     }
 
     /**
@@ -27,6 +38,16 @@ public class QueueTask extends Task {
      * @param initialTasks Initial tasks to add to the queue
      */
     public QueueTask(RobotContext robotContext, ArrayList<Task> initialTasks) {
+        this(robotContext, initialTasks, false);
+    }
+
+    /**
+     * Creates a queue task with initial tasks.
+     * @param robotContext contains references like telemetry, gamepads, and subsystems
+     * @param initialTasks Initial tasks to add to the queue
+     * @param stopOnEmpty if true, task stops when queue is empty; if false, task continues running
+     */
+    public QueueTask(RobotContext robotContext, ArrayList<Task> initialTasks, boolean stopOnEmpty) {
         super(robotContext);
         if (initialTasks == null) {
             throw new IllegalArgumentException("Initial tasks list cannot be null");
@@ -37,6 +58,7 @@ public class QueueTask extends Task {
             }
         }
         TASKS = new ArrayList<>(initialTasks);
+        this.STOP_ON_EMPTY = stopOnEmpty;
     }
 
     /**
@@ -71,9 +93,10 @@ public class QueueTask extends Task {
 
     @Override
     protected boolean run(RobotContext robotContext) {
-        // If queue is empty, task is complete
+        // If queue is empty
         if (TASKS.isEmpty()) {
-            return false;
+            // If STOP_ON_EMPTY is false, keep running; otherwise, stop
+            return !STOP_ON_EMPTY;
         }
 
         // Execute the first task in the queue
@@ -82,7 +105,8 @@ public class QueueTask extends Task {
             TASKS.remove(0);
         }
 
-        // Continue running if there are still tasks in the queue
-        return !TASKS.isEmpty();
+        // If STOP_ON_EMPTY is false, always continue running
+        // If STOP_ON_EMPTY is true, continue only if there are tasks left
+        return !STOP_ON_EMPTY || !TASKS.isEmpty();
     }
 }
