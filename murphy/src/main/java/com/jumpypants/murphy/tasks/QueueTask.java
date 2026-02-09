@@ -12,13 +12,14 @@ import java.util.ArrayList;
 public class QueueTask extends Task {
     private final ArrayList<Task> TASKS;
     private final boolean STOP_ON_EMPTY;
+    private final int MAX_QUEUE_SIZE;
 
     /**
      * Creates an empty queue task.
      * @param robotContext contains references like telemetry, gamepads, and subsystems
      */
     public QueueTask(RobotContext robotContext) {
-        this(robotContext, false);
+        this(robotContext, false, -1);
     }
 
     /**
@@ -27,49 +28,37 @@ public class QueueTask extends Task {
      * @param stopOnEmpty if true, task stops when queue is empty; if false, task continues running
      */
     public QueueTask(RobotContext robotContext, boolean stopOnEmpty) {
+        this(robotContext, stopOnEmpty, -1);
+    }
+
+    /**
+     * Creates an empty queue task with an optional maximum queue size.
+     * @param robotContext contains references like telemetry, gamepads, and subsystems
+     * @param stopOnEmpty if true, task stops when queue is empty; if false, task continues running
+     * @param maxQueueSize maximum number of tasks allowed in the queue
+     */
+    public QueueTask(RobotContext robotContext, boolean stopOnEmpty, int maxQueueSize) {
         super(robotContext);
         TASKS = new ArrayList<>();
         this.STOP_ON_EMPTY = stopOnEmpty;
+        this.MAX_QUEUE_SIZE = maxQueueSize;
     }
 
-    /**
-     * Creates a queue task with initial tasks.
-     * @param robotContext contains references like telemetry, gamepads, and subsystems
-     * @param initialTasks Initial tasks to add to the queue
-     */
-    public QueueTask(RobotContext robotContext, ArrayList<Task> initialTasks) {
-        this(robotContext, initialTasks, false);
-    }
-
-    /**
-     * Creates a queue task with initial tasks.
-     * @param robotContext contains references like telemetry, gamepads, and subsystems
-     * @param initialTasks Initial tasks to add to the queue
-     * @param stopOnEmpty if true, task stops when queue is empty; if false, task continues running
-     */
-    public QueueTask(RobotContext robotContext, ArrayList<Task> initialTasks, boolean stopOnEmpty) {
-        super(robotContext);
-        if (initialTasks == null) {
-            throw new IllegalArgumentException("Initial tasks list cannot be null");
-        }
-        for (int i = 0; i < initialTasks.size(); i++) {
-            if (initialTasks.get(i) == null) {
-                throw new IllegalArgumentException("Task at index " + i + " cannot be null");
-            }
-        }
-        TASKS = new ArrayList<>(initialTasks);
-        this.STOP_ON_EMPTY = stopOnEmpty;
-    }
 
     /**
      * Adds a task to the end of the queue.
      * @param task Task to add to the queue
+     * @return true if task was added successfully, false if queue is full or task is null
      */
-    public void addTask(Task task) {
+    public boolean addTask(Task task) {
         if (task == null) {
-            throw new IllegalArgumentException("Task cannot be null");
+            return false;
+        }
+        if (MAX_QUEUE_SIZE > 0 && TASKS.size() >= MAX_QUEUE_SIZE) {
+            return false;
         }
         TASKS.add(task);
+        return true;
     }
 
     /**
@@ -86,6 +75,13 @@ public class QueueTask extends Task {
      */
     public boolean isEmpty() {
         return TASKS.isEmpty();
+    }
+
+    /**
+     * Clears all tasks from the queue.
+     */
+    public void clear() {
+        TASKS.clear();
     }
 
     @Override
